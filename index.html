@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MultiPing - Check Multiple URLs at Once</title>
+    <style>
+      :root {
+        --primary-color: #4a6baf;
+        --secondary-color: #6c8eef;
+        --background-color: #f5f7fa;
+        --card-color: #ffffff;
+        --text-color: #333333;
+        --success-color: #4caf50;
+        --error-color: #f44336;
+        --border-radius: 8px;
+        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s ease;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        padding: 20px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 20px;
+      }
+
+      h1 {
+        color: var(--primary-color);
+        margin-bottom: 10px;
+      }
+
+      .subheading {
+        color: #666;
+        font-size: 1.1rem;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+        flex: 1;
+      }
+
+      .input-section {
+        background-color: var(--card-color);
+        padding: 30px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        margin-bottom: 30px;
+      }
+
+      .url-input {
+        width: 100%;
+        height: 200px;
+        padding: 15px;
+        border: 2px solid #ddd;
+        border-radius: var(--border-radius);
+        font-size: 16px;
+        resize: vertical;
+        margin-bottom: 20px;
+        transition: var(--transition);
+      }
+
+      .url-input:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(74, 107, 175, 0.2);
+      }
+
+      .ping-button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        transition: var(--transition);
+        display: block;
+        margin: 0 auto;
+        min-width: 200px;
+      }
+
+      .ping-button:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-2px);
+      }
+
+      .ping-button:active {
+        transform: translateY(0);
+      }
+
+      .ping-button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .info-text {
+        margin-top: 15px;
+        text-align: center;
+        color: #666;
+      }
+
+      #spinner {
+        display: none;
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      .spinner-icon {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-left-color: var(--primary-color);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .results-section {
+        display: none;
+        margin-bottom: 30px;
+      }
+
+      .results-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 20px;
+      }
+
+      .result-card {
+        background-color: var(--card-color);
+        border-radius: var(--border-radius);
+        padding: 20px;
+        box-shadow: var(--box-shadow);
+        transition: var(--transition);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .result-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .result-url {
+        font-weight: bold;
+        margin-bottom: 10px;
+        word-break: break-all;
+        color: var(--primary-color);
+      }
+
+      .result-success {
+        color: var(--success-color);
+        margin-bottom: 10px;
+      }
+
+      .result-error {
+        color: var(--error-color);
+        margin-bottom: 10px;
+      }
+
+      .result-details {
+        margin-top: 10px;
+        font-size: 0.9rem;
+      }
+
+      .result-image {
+        max-width: 100%;
+        max-height: 200px;
+        object-fit: contain;
+        margin-top: 15px;
+        border-radius: 4px;
+        align-self: center;
+      }
+
+      footer {
+        text-align: center;
+        padding: 20px;
+        margin-top: 20px;
+        color: #666;
+      }
+
+      @media (max-width: 768px) {
+        .results-container {
+          grid-template-columns: 1fr;
+        }
+
+        .input-section {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>MultiPing</h1>
+      <p class="subheading">
+        Check multiple URLs simultaneously with one click
+      </p>
+    </header>
+
+    <div class="container">
+      <div class="input-section">
+        <textarea
+          id="urlInput"
+          class="url-input"
+          placeholder="Enter URLs (one per line or CSV format)&#10;&#10;Example:&#10;https://example.com&#10;https://google.com,https://bing.com"
+        ></textarea>
+
+        <button id="pingButton" class="ping-button">Ping URLs</button>
+
+        <p class="info-text">
+          Enter multiple URLs separated by new lines or commas and click "Ping
+          URLs" to check them all at once.
+        </p>
+      </div>
+
+      <div id="spinner">
+        <div class="spinner-icon"></div>
+        <p>Pinging URLs...</p>
+      </div>
+
+      <div id="resultsSection" class="results-section">
+        <h2>Results</h2>
+        <div id="resultsContainer" class="results-container">
+          <!-- Results will be added here dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>MultiPing - A tool for checking multiple URLs simultaneously</p>
+    </footer>
+
+    <script>
+      /**
+       * MultiPing - Main application script
+       * Handles URL input parsing and fetching resources from multiple URLs
+       */
+      document.addEventListener("DOMContentLoaded", function () {
+        // DOM elements
+        const urlInput = document.getElementById("urlInput");
+        const pingButton = document.getElementById("pingButton");
+        const spinner = document.getElementById("spinner");
+        const resultsSection = document.getElementById("resultsSection");
+        const resultsContainer = document.getElementById("resultsContainer");
+
+        // Event listeners
+        pingButton.addEventListener("click", handlePingButtonClick);
+
+        /**
+         * Handles the click event for the ping button
+         * Parses input and initiates fetching of URLs
+         */
+        function handlePingButtonClick() {
+          const urls = parseUrlInput(urlInput.value);
+
+          if (urls.length === 0) {
+            alert("Please enter at least one valid URL");
+            return;
+          }
+
+          // Clear previous results
+          resultsContainer.innerHTML = "";
+          resultsSection.style.display = "none";
+
+          // Show spinner
+          spinner.style.display = "block";
+          pingButton.disabled = true;
+
+          // Fetch all URLs
+          fetchAllUrls(urls).finally(() => {
+            spinner.style.display = "none";
+            pingButton.disabled = false;
+            resultsSection.style.display = "block";
+          });
+        }
+
+        /**
+         * Parses input text to extract URLs
+         * Supports both comma-separated and line-separated formats
+         *
+         * @param {string} input - Raw text input containing URLs
+         * @return {string[]} Array of parsed URLs
+         */
+        function parseUrlInput(input) {
+          if (!input || input.trim() === "") {
+            return [];
+          }
+
+          // First split by new lines
+          const lines = input.split(/\n/).filter((line) => line.trim() !== "");
+
+          // Then check each line for commas
+          const urls = [];
+
+          for (const line of lines) {
+            if (line.includes(",")) {
+              // If the line contains commas, split by commas
+              const lineUrls = line
+                .split(",")
+                .map((url) => url.trim())
+                .filter((url) => url !== "");
+              urls.push(...lineUrls);
+            } else {
+              // Otherwise, add the whole line as a URL
+              urls.push(line.trim());
+            }
+          }
+
+          // Add http:// to URLs that don't have a protocol
+          return urls.map((url) => {
+            if (!url.match(/^https?:\/\//i)) {
+              return "http://" + url;
+            }
+            return url;
+          });
+        }
+
+        /**
+         * Fetches all URLs concurrently
+         *
+         * @param {string[]} urls - Array of URLs to fetch
+         * @return {Promise} Promise that resolves when all fetches are complete
+         */
+        function fetchAllUrls(urls) {
+          const fetchPromises = urls.map((url) => fetchSingleUrl(url));
+
+          return Promise.allSettled(fetchPromises).then((results) => {
+            results.forEach((result, index) => {
+              if (result.status === "fulfilled") {
+                displayResult(urls[index], result.value);
+              } else {
+                displayError(urls[index], result.reason);
+              }
+            });
+          });
+        }
+
+        /**
+         * Fetches a single URL and attempts to determine content type
+         *
+         * @param {string} url - URL to fetch
+         * @return {Promise} Promise that resolves with the fetch result object
+         */
+        function fetchSingleUrl(url) {
+          return fetch(url).then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const contentType = response.headers.get("content-type") || "";
+            const isImage = contentType.startsWith("image/");
+
+            if (isImage) {
+              return {
+                success: true,
+                isImage: true,
+                url: url,
+                status: response.status,
+                contentType: contentType,
+                imageUrl: url,
+              };
+            } else {
+              return response.text().then((text) => {
+                // Check if it contains an image
+                let imageUrl = null;
+
+                // Check for a potential image tag in HTML content
+                if (contentType.includes("html")) {
+                  const parser = new DOMParser();
+                  const doc = parser.parseFromString(text, "text/html");
+
+                  // Try to find a prominent image - og:image, twitter:image, or first image
+                  const ogImage = doc.querySelector(
+                    'meta[property="og:image"]'
+                  );
+                  const twitterImage = doc.querySelector(
+                    'meta[name="twitter:image"]'
+                  );
+                  const firstImage = doc.querySelector("img[src]");
+
+                  if (ogImage && ogImage.getAttribute("content")) {
+                    imageUrl = resolveUrl(url, ogImage.getAttribute("content"));
+                  } else if (
+                    twitterImage &&
+                    twitterImage.getAttribute("content")
+                  ) {
+                    imageUrl = resolveUrl(
+                      url,
+                      twitterImage.getAttribute("content")
+                    );
+                  } else if (firstImage && firstImage.getAttribute("src")) {
+                    imageUrl = resolveUrl(url, firstImage.getAttribute("src"));
+                  }
+                }
+
+                return {
+                  success: true,
+                  isImage: false,
+                  url: url,
+                  status: response.status,
+                  contentType: contentType,
+                  contentPreview:
+                    text.slice(0, 150) + (text.length > 150 ? "..." : ""),
+                  imageUrl: imageUrl,
+                };
+              });
+            }
+          });
+        }
+
+        /**
+         * Resolves a relative URL against a base URL
+         *
+         * @param {string} base - Base URL
+         * @param {string} relative - Relative URL
+         * @return {string} Resolved absolute URL
+         */
+        function resolveUrl(base, relative) {
+          try {
+            return new URL(relative, base).href;
+          } catch (e) {
+            return relative; // Return as-is if URL parsing fails
+          }
+        }
+
+        /**
+         * Displays a successful result in the results container
+         *
+         * @param {string} url - The URL that was fetched
+         * @param {Object} result - The fetch result object
+         */
+        function displayResult(url, result) {
+          const resultCard = document.createElement("div");
+          resultCard.className = "result-card";
+
+          const urlElement = document.createElement("div");
+          urlElement.className = "result-url";
+          urlElement.textContent = url;
+          resultCard.appendChild(urlElement);
+
+          const statusElement = document.createElement("div");
+          statusElement.className = "result-success";
+          statusElement.textContent = `Status: ${result.status} OK`;
+          resultCard.appendChild(statusElement);
+
+          const detailsElement = document.createElement("div");
+          detailsElement.className = "result-details";
+          detailsElement.innerHTML = `Content Type: ${result.contentType}`;
+          resultCard.appendChild(detailsElement);
+
+          if (!result.isImage) {
+            const previewElement = document.createElement("div");
+            previewElement.className = "result-details";
+            previewElement.textContent = `Preview: ${result.contentPreview}`;
+            resultCard.appendChild(previewElement);
+          }
+
+          // Add image if available
+          if (result.imageUrl) {
+            try {
+              const img = document.createElement("img");
+              img.className = "result-image";
+              img.src = result.imageUrl;
+              img.alt = "Content preview image";
+              img.onerror = function () {
+                this.style.display = "none";
+              };
+              resultCard.appendChild(img);
+            } catch (e) {
+              console.error("Error creating image element:", e);
+            }
+          }
+
+          resultsContainer.appendChild(resultCard);
+        }
+
+        /**
+         * Displays an error result in the results container
+         *
+         * @param {string} url - The URL that failed to fetch
+         * @param {Error} error - The error that occurred
+         */
+        function displayError(url, error) {
+          const resultCard = document.createElement("div");
+          resultCard.className = "result-card";
+
+          const urlElement = document.createElement("div");
+          urlElement.className = "result-url";
+          urlElement.textContent = url;
+          resultCard.appendChild(urlElement);
+
+          const errorElement = document.createElement("div");
+          errorElement.className = "result-error";
+          errorElement.textContent =
+            "Error: " + (error.message || "Failed to fetch");
+          resultCard.appendChild(errorElement);
+
+          resultsContainer.appendChild(resultCard);
+        }
+      });
+    </script>
+  </body>
+</html>
