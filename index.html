@@ -3,531 +3,796 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MultiPing - Check Multiple URLs at Once</title>
+    <title>Document</title>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs/lib/anime.iife.min.js"></script>
+  </head>
+
+  <body x-data="websiteData">
     <style>
-      :root {
-        --primary-color: #4a6baf;
-        --secondary-color: #6c8eef;
-        --background-color: #f5f7fa;
-        --card-color: #ffffff;
-        --text-color: #333333;
-        --success-color: #4caf50;
-        --error-color: #f44336;
-        --border-radius: 8px;
-        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        --transition: all 0.3s ease;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      }
-
+      /* Global Settings */
       body {
-        background-color: var(--background-color);
-        color: var(--text-color);
+        direction: rtl;
+        text-align: right;
+        font-family: "Assistant", "Rubik", sans-serif;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .p1 {
+        padding: 4px;
+      }
+
+      .p2 {
+        padding: 8px;
+      }
+
+      .p3 {
+        padding: 12px;
+      }
+
+      .p4 {
+        padding: 16px;
+      }
+
+      .p5 {
         padding: 20px;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
       }
 
-      header {
-        text-align: center;
-        margin-bottom: 30px;
-        padding: 20px;
+      .p6 {
+        padding: 24px;
       }
 
-      h1 {
-        color: var(--primary-color);
-        margin-bottom: 10px;
+      .p7 {
+        padding: 28px;
       }
 
-      .subheading {
-        color: #666;
-        font-size: 1.1rem;
+      .p8 {
+        padding: 32px;
+      }
+
+      .p9 {
+        padding: 36px;
+      }
+
+      .p10 {
+        padding: 40px;
+      }
+
+      .pt1 {
+        padding-top: 4px;
+      }
+
+      .pt2 {
+        padding-top: 8px;
+      }
+
+      .pt3 {
+        padding-top: 12px;
+      }
+
+      .pt4 {
+        padding-top: 16px;
+      }
+
+      .pt5 {
+        padding-top: 20px;
+      }
+
+      .pt6 {
+        padding-top: 24px;
+      }
+
+      .pt7 {
+        padding-top: 28px;
+      }
+
+      .pt8 {
+        padding-top: 32px;
+      }
+
+      .pt9 {
+        padding-top: 36px;
+      }
+
+      .pt10 {
+        padding-top: 40px;
+      }
+
+      .pr1 {
+        padding-right: 4px;
+      }
+
+      .pr2 {
+        padding-right: 8px;
+      }
+
+      .pr3 {
+        padding-right: 12px;
+      }
+
+      .pr4 {
+        padding-right: 16px;
+      }
+
+      .pr5 {
+        padding-right: 20px;
+      }
+
+      .pr6 {
+        padding-right: 24px;
+      }
+
+      .pr7 {
+        padding-right: 28px;
+      }
+
+      .pr8 {
+        padding-right: 32px;
+      }
+
+      .pr9 {
+        padding-right: 36px;
+      }
+
+      .pr10 {
+        padding-right: 40px;
+      }
+
+      .pb1 {
+        padding-bottom: 4px;
+      }
+
+      .pb2 {
+        padding-bottom: 8px;
+      }
+
+      .pb3 {
+        padding-bottom: 12px;
+      }
+
+      .pb4 {
+        padding-bottom: 16px;
+      }
+
+      .pb5 {
+        padding-bottom: 20px;
+      }
+
+      .pb6 {
+        padding-bottom: 24px;
+      }
+
+      .pb7 {
+        padding-bottom: 28px;
+      }
+
+      .pb8 {
+        padding-bottom: 32px;
+      }
+
+      .pb9 {
+        padding-bottom: 36px;
+      }
+
+      .pb10 {
+        padding-bottom: 40px;
+      }
+
+      .pl1 {
+        padding-left: 4px;
+      }
+
+      .pl2 {
+        padding-left: 8px;
+      }
+
+      .pl3 {
+        padding-left: 12px;
+      }
+
+      .pl4 {
+        padding-left: 16px;
+      }
+
+      .pl5 {
+        padding-left: 20px;
+      }
+
+      .pl6 {
+        padding-left: 24px;
+      }
+
+      .pl7 {
+        padding-left: 28px;
+      }
+
+      .pl8 {
+        padding-left: 32px;
+      }
+
+      .pl9 {
+        padding-left: 36px;
+      }
+
+      .pl10 {
+        padding-left: 40px;
+      }
+
+      .px1 {
+        padding-left: 4px;
+        padding-right: 4px;
+      }
+
+      .px2 {
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+
+      .px3 {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .px4 {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .px5 {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .px6 {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .px7 {
+        padding-left: 28px;
+        padding-right: 28px;
+      }
+
+      .px8 {
+        padding-left: 32px;
+        padding-right: 32px;
+      }
+
+      .px9 {
+        padding-left: 36px;
+        padding-right: 36px;
+      }
+
+      .px10 {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+
+      .py1 {
+        padding-top: 4px;
+        padding-bottom: 4px;
+      }
+
+      .py2 {
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+
+      .py3 {
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+
+      .py4 {
+        padding-top: 16px;
+        padding-bottom: 16px;
+      }
+
+      .py5 {
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+
+      .py6 {
+        padding-top: 24px;
+        padding-bottom: 24px;
+      }
+
+      .py7 {
+        padding-top: 28px;
+        padding-bottom: 28px;
+      }
+
+      .py8 {
+        padding-top: 32px;
+        padding-bottom: 32px;
+      }
+
+      .py9 {
+        padding-top: 36px;
+        padding-bottom: 36px;
+      }
+
+      .py10 {
+        padding-top: 40px;
+        padding-bottom: 40px;
+      }
+
+      .m1 {
+        margin: 4px;
+      }
+
+      .m2 {
+        margin: 8px;
+      }
+
+      .m3 {
+        margin: 12px;
+      }
+
+      .m4 {
+        margin: 16px;
+      }
+
+      .m5 {
+        margin: 20px;
+      }
+
+      .m6 {
+        margin: 24px;
+      }
+
+      .m7 {
+        margin: 28px;
+      }
+
+      .m8 {
+        margin: 32px;
+      }
+
+      .m9 {
+        margin: 36px;
+      }
+
+      .m10 {
+        margin: 40px;
+      }
+
+      .mt1 {
+        margin-top: 4px;
+      }
+
+      .mt2 {
+        margin-top: 8px;
+      }
+
+      .mt3 {
+        margin-top: 12px;
+      }
+
+      .mt4 {
+        margin-top: 16px;
+      }
+
+      .mt5 {
+        margin-top: 20px;
+      }
+
+      .mt6 {
+        margin-top: 24px;
+      }
+
+      .mt7 {
+        margin-top: 28px;
+      }
+
+      .mt8 {
+        margin-top: 32px;
+      }
+
+      .mt9 {
+        margin-top: 36px;
+      }
+
+      .mt10 {
+        margin-top: 40px;
+      }
+
+      .mr1 {
+        margin-right: 4px;
+      }
+
+      .mr2 {
+        margin-right: 8px;
+      }
+
+      .mr3 {
+        margin-right: 12px;
+      }
+
+      .mr4 {
+        margin-right: 16px;
+      }
+
+      .mr5 {
+        margin-right: 20px;
+      }
+
+      .mr6 {
+        margin-right: 24px;
+      }
+
+      .mr7 {
+        margin-right: 28px;
+      }
+
+      .mr8 {
+        margin-right: 32px;
+      }
+
+      .mr9 {
+        margin-right: 36px;
+      }
+
+      .mr10 {
+        margin-right: 40px;
+      }
+
+      .mb1 {
+        margin-bottom: 4px;
+      }
+
+      .mb2 {
+        margin-bottom: 8px;
+      }
+
+      .mb3 {
+        margin-bottom: 12px;
+      }
+
+      .mb4 {
+        margin-bottom: 16px;
+      }
+
+      .mb5 {
+        margin-bottom: 20px;
+      }
+
+      .mb6 {
+        margin-bottom: 24px;
+      }
+
+      .mb7 {
+        margin-bottom: 28px;
+      }
+
+      .mb8 {
+        margin-bottom: 32px;
+      }
+
+      .mb9 {
+        margin-bottom: 36px;
+      }
+
+      .mb10 {
+        margin-bottom: 40px;
+      }
+
+      .ml1 {
+        margin-left: 4px;
+      }
+
+      .ml2 {
+        margin-left: 8px;
+      }
+
+      .ml3 {
+        margin-left: 12px;
+      }
+
+      .ml4 {
+        margin-left: 16px;
+      }
+
+      .ml5 {
+        margin-left: 20px;
+      }
+
+      .ml6 {
+        margin-left: 24px;
+      }
+
+      .ml7 {
+        margin-left: 28px;
+      }
+
+      .ml8 {
+        margin-left: 32px;
+      }
+
+      .ml9 {
+        margin-left: 36px;
+      }
+
+      .ml10 {
+        margin-left: 40px;
+      }
+
+      .mx1 {
+        margin-left: 4px;
+        margin-right: 4px;
+      }
+
+      .mx2 {
+        margin-left: 8px;
+        margin-right: 8px;
+      }
+
+      .mx3 {
+        margin-left: 12px;
+        margin-right: 12px;
+      }
+
+      .mx4 {
+        margin-left: 16px;
+        margin-right: 16px;
+      }
+
+      .mx5 {
+        margin-left: 20px;
+        margin-right: 20px;
+      }
+
+      .mx6 {
+        margin-left: 24px;
+        margin-right: 24px;
+      }
+
+      .mx7 {
+        margin-left: 28px;
+        margin-right: 28px;
+      }
+
+      .mx8 {
+        margin-left: 32px;
+        margin-right: 32px;
+      }
+
+      .mx9 {
+        margin-left: 36px;
+        margin-right: 36px;
+      }
+
+      .mx10 {
+        margin-left: 40px;
+        margin-right: 40px;
+      }
+
+      .ml-auto,
+      .mx-auto {
+        margin-left: auto;
+      }
+
+      .mr-auto,
+      .mx-auto {
+        margin-right: auto;
+      }
+
+      .my1 {
+        margin-top: 4px;
+        margin-bottom: 4px;
+      }
+
+      .my2 {
+        margin-top: 8px;
+        margin-bottom: 8px;
+      }
+
+      .my3 {
+        margin-top: 12px;
+        margin-bottom: 12px;
+      }
+
+      .my4 {
+        margin-top: 16px;
+        margin-bottom: 16px;
+      }
+
+      .my5 {
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      .my6 {
+        margin-top: 24px;
+        margin-bottom: 24px;
+      }
+
+      .my7 {
+        margin-top: 28px;
+        margin-bottom: 28px;
+      }
+
+      .my8 {
+        margin-top: 32px;
+        margin-bottom: 32px;
+      }
+
+      .my9 {
+        margin-top: 36px;
+        margin-bottom: 36px;
+      }
+
+      .my10 {
+        margin-top: 40px;
+        margin-bottom: 40px;
       }
 
       .container {
         max-width: 1200px;
         margin: 0 auto;
-        width: 100%;
-        flex: 1;
+        padding: 0 15px;
       }
 
-      .input-section {
-        background-color: var(--card-color);
-        padding: 30px;
-        border-radius: var(--border-radius);
-        box-shadow: var(--box-shadow);
-        margin-bottom: 30px;
-      }
-
-      .url-input {
-        width: 100%;
-        height: 200px;
-        padding: 15px;
-        border: 2px solid #ddd;
-        border-radius: var(--border-radius);
-        font-size: 16px;
-        resize: vertical;
-        margin-bottom: 20px;
-        transition: var(--transition);
-      }
-
-      .url-input:focus {
-        border-color: var(--primary-color);
-        outline: none;
-        box-shadow: 0 0 0 2px rgba(74, 107, 175, 0.2);
-      }
-
-      .ping-button {
-        background-color: var(--primary-color);
-        color: white;
-        border: none;
-        padding: 15px 30px;
-        font-size: 18px;
-        font-weight: bold;
-        border-radius: var(--border-radius);
-        cursor: pointer;
-        transition: var(--transition);
-        display: block;
-        margin: 0 auto;
-        min-width: 200px;
-      }
-
-      .ping-button:hover {
-        background-color: var(--secondary-color);
-        transform: translateY(-2px);
-      }
-
-      .ping-button:active {
-        transform: translateY(0);
-      }
-
-      .ping-button:disabled {
-        background-color: #cccccc;
-        cursor: not-allowed;
-        transform: none;
-      }
-
-      .info-text {
-        margin-top: 15px;
+      .center {
         text-align: center;
-        color: #666;
       }
 
-      #spinner {
-        display: none;
-        text-align: center;
-        margin: 20px 0;
+      .right {
+        text-align: right;
       }
 
-      .spinner-icon {
-        border: 4px solid rgba(0, 0, 0, 0.1);
-        border-left-color: var(--primary-color);
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        animation: spin 1s linear infinite;
-        margin: 0 auto;
-      }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-
-      .results-section {
-        display: none;
-        margin-bottom: 30px;
-      }
-
-      .results-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-        gap: 20px;
-      }
-
-      .result-card {
-        background-color: var(--card-color);
-        border-radius: var(--border-radius);
-        padding: 20px;
-        box-shadow: var(--box-shadow);
-        transition: var(--transition);
+      .flex {
         display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .row {
+        flex-direction: row;
+      }
+
+      .column {
         flex-direction: column;
       }
 
-      .result-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      .b-0 {
+        background: #fff;
       }
 
-      .result-url {
-        font-weight: bold;
-        margin-bottom: 10px;
-        word-break: break-all;
-        color: var(--primary-color);
+      .b-1 {
+        background: #f4f7fe;
       }
 
-      .result-success {
-        color: var(--success-color);
-        margin-bottom: 10px;
+      .b-2 {
+        background: #e6efff;
       }
 
-      .result-error {
-        color: var(--error-color);
-        margin-bottom: 10px;
+      .b-3 {
+        background: #142269;
       }
 
-      .result-details {
-        margin-top: 10px;
-        font-size: 0.9rem;
+      .c-0 {
+        color: #fff;
       }
 
-      .result-image {
-        max-width: 100%;
-        max-height: 200px;
-        object-fit: contain;
-        margin-top: 15px;
-        border-radius: 4px;
-        align-self: center;
+      .c-1 {
+        color: #f4f7fe;
       }
 
-      footer {
-        text-align: center;
-        padding: 20px;
-        margin-top: 20px;
-        color: #666;
+      .c-2 {
+        color: #e6efff;
       }
 
-      @media (max-width: 768px) {
-        .results-container {
-          grid-template-columns: 1fr;
+      .c-3 {
+        color: #142269;
+      }
+
+      @media (max-width: 800px) {
+        .right {
+          text-align: center;
         }
 
-        .input-section {
-          padding: 20px;
+        .m_row {
+          flex-direction: row;
+        }
+
+        .m_colmn {
+          flex-direction: column;
         }
       }
     </style>
-  </head>
-  <body>
-    <header>
-      <h1>MultiPing</h1>
-      <p class="subheading">
-        Check multiple URLs simultaneously with one click
-      </p>
-    </header>
 
-    <div class="container">
-      <div class="input-section">
-        <textarea
-          id="urlInput"
-          class="url-input"
-          placeholder="Enter URLs (one per line or CSV format)&#10;&#10;Example:&#10;https://example.com&#10;https://google.com,https://bing.com"
-        ></textarea>
-
-        <button id="pingButton" class="ping-button">Ping URLs</button>
-
-        <p class="info-text">
-          Enter multiple URLs separated by new lines or commas and click "Ping
-          URLs" to check them all at once.
-        </p>
-      </div>
-
-      <div id="spinner">
-        <div class="spinner-icon"></div>
-        <p>Pinging URLs...</p>
-      </div>
-
-      <div id="resultsSection" class="results-section">
-        <h2>Results</h2>
-        <div id="resultsContainer" class="results-container">
-          <!-- Results will be added here dynamically -->
-        </div>
-      </div>
-    </div>
-
-    <footer>
-      <p>MultiPing - A tool for checking multiple URLs simultaneously</p>
-    </footer>
-
-    <script>
-      /**
-       * MultiPing - Main application script
-       * Handles URL input parsing and fetching resources from multiple URLs
-       */
-      document.addEventListener("DOMContentLoaded", function () {
-        // DOM elements
-        const urlInput = document.getElementById("urlInput");
-        const pingButton = document.getElementById("pingButton");
-        const spinner = document.getElementById("spinner");
-        const resultsSection = document.getElementById("resultsSection");
-        const resultsContainer = document.getElementById("resultsContainer");
-
-        // Event listeners
-        pingButton.addEventListener("click", handlePingButtonClick);
-
-        /**
-         * Handles the click event for the ping button
-         * Parses input and initiates fetching of URLs
-         */
-        function handlePingButtonClick() {
-          const urls = parseUrlInput(urlInput.value);
-
-          if (urls.length === 0) {
-            alert("Please enter at least one valid URL");
-            return;
-          }
-
-          // Clear previous results
-          resultsContainer.innerHTML = "";
-          resultsSection.style.display = "none";
-
-          // Show spinner
-          spinner.style.display = "block";
-          pingButton.disabled = true;
-
-          // Fetch all URLs
-          fetchAllUrls(urls).finally(() => {
-            spinner.style.display = "none";
-            pingButton.disabled = false;
-            resultsSection.style.display = "block";
-          });
-        }
-
-        /**
-         * Parses input text to extract URLs
-         * Supports both comma-separated and line-separated formats
-         *
-         * @param {string} input - Raw text input containing URLs
-         * @return {string[]} Array of parsed URLs
-         */
-        function parseUrlInput(input) {
-          if (!input || input.trim() === "") {
-            return [];
-          }
-
-          // First split by new lines
-          const lines = input.split(/\n/).filter((line) => line.trim() !== "");
-
-          // Then check each line for commas
-          const urls = [];
-
-          for (const line of lines) {
-            if (line.includes(",")) {
-              // If the line contains commas, split by commas
-              const lineUrls = line
-                .split(",")
-                .map((url) => url.trim())
-                .filter((url) => url !== "");
-              urls.push(...lineUrls);
-            } else {
-              // Otherwise, add the whole line as a URL
-              urls.push(line.trim());
-            }
-          }
-
-          // Add http:// to URLs that don't have a protocol
-          return urls.map((url) => {
-            if (!url.match(/^https?:\/\//i)) {
-              return "http://" + url;
-            }
-            return url;
-          });
-        }
-
-        /**
-         * Fetches all URLs concurrently
-         *
-         * @param {string[]} urls - Array of URLs to fetch
-         * @return {Promise} Promise that resolves when all fetches are complete
-         */
-        function fetchAllUrls(urls) {
-          const fetchPromises = urls.map((url) => fetchSingleUrl(url));
-
-          return Promise.allSettled(fetchPromises).then((results) => {
-            results.forEach((result, index) => {
-              if (result.status === "fulfilled") {
-                displayResult(urls[index], result.value);
-              } else {
-                displayError(urls[index], result.reason);
-              }
-            });
-          });
-        }
-
-        /**
-         * Fetches a single URL and attempts to determine content type
-         *
-         * @param {string} url - URL to fetch
-         * @return {Promise} Promise that resolves with the fetch result object
-         */
-        function fetchSingleUrl(url) {
-          return fetch(url).then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const contentType = response.headers.get("content-type") || "";
-            const isImage = contentType.startsWith("image/");
-
-            if (isImage) {
-              return {
-                success: true,
-                isImage: true,
-                url: url,
-                status: response.status,
-                contentType: contentType,
-                imageUrl: url,
-              };
-            } else {
-              return response.text().then((text) => {
-                // Check if it contains an image
-                let imageUrl = null;
-
-                // Check for a potential image tag in HTML content
-                if (contentType.includes("html")) {
-                  const parser = new DOMParser();
-                  const doc = parser.parseFromString(text, "text/html");
-
-                  // Try to find a prominent image - og:image, twitter:image, or first image
-                  const ogImage = doc.querySelector(
-                    'meta[property="og:image"]'
-                  );
-                  const twitterImage = doc.querySelector(
-                    'meta[name="twitter:image"]'
-                  );
-                  const firstImage = doc.querySelector("img[src]");
-
-                  if (ogImage && ogImage.getAttribute("content")) {
-                    imageUrl = resolveUrl(url, ogImage.getAttribute("content"));
-                  } else if (
-                    twitterImage &&
-                    twitterImage.getAttribute("content")
-                  ) {
-                    imageUrl = resolveUrl(
-                      url,
-                      twitterImage.getAttribute("content")
-                    );
-                  } else if (firstImage && firstImage.getAttribute("src")) {
-                    imageUrl = resolveUrl(url, firstImage.getAttribute("src"));
-                  }
-                }
-
-                return {
-                  success: true,
-                  isImage: false,
-                  url: url,
-                  status: response.status,
-                  contentType: contentType,
-                  contentPreview:
-                    text.slice(0, 150) + (text.length > 150 ? "..." : ""),
-                  imageUrl: imageUrl,
-                };
-              });
-            }
-          });
-        }
-
-        /**
-         * Resolves a relative URL against a base URL
-         *
-         * @param {string} base - Base URL
-         * @param {string} relative - Relative URL
-         * @return {string} Resolved absolute URL
-         */
-        function resolveUrl(base, relative) {
-          try {
-            return new URL(relative, base).href;
-          } catch (e) {
-            return relative; // Return as-is if URL parsing fails
-          }
-        }
-
-        /**
-         * Displays a successful result in the results container
-         *
-         * @param {string} url - The URL that was fetched
-         * @param {Object} result - The fetch result object
-         */
-        function displayResult(url, result) {
-          const resultCard = document.createElement("div");
-          resultCard.className = "result-card";
-
-          const urlElement = document.createElement("div");
-          urlElement.className = "result-url";
-          urlElement.textContent = url;
-          resultCard.appendChild(urlElement);
-
-          const statusElement = document.createElement("div");
-          statusElement.className = "result-success";
-          statusElement.textContent = `Status: ${result.status} OK`;
-          resultCard.appendChild(statusElement);
-
-          const detailsElement = document.createElement("div");
-          detailsElement.className = "result-details";
-          detailsElement.innerHTML = `Content Type: ${result.contentType}`;
-          resultCard.appendChild(detailsElement);
-
-          if (!result.isImage) {
-            const previewElement = document.createElement("div");
-            previewElement.className = "result-details";
-            previewElement.textContent = `Preview: ${result.contentPreview}`;
-            resultCard.appendChild(previewElement);
-          }
-
-          // Add image if available
-          if (result.imageUrl) {
-            try {
-              const img = document.createElement("img");
-              img.className = "result-image";
-              img.src = result.imageUrl;
-              img.alt = "Content preview image";
-              img.onerror = function () {
-                this.style.display = "none";
-              };
-              resultCard.appendChild(img);
-            } catch (e) {
-              console.error("Error creating image element:", e);
-            }
-          }
-
-          resultsContainer.appendChild(resultCard);
-        }
-
-        /**
-         * Displays an error result in the results container
-         *
-         * @param {string} url - The URL that failed to fetch
-         * @param {Error} error - The error that occurred
-         */
-        function displayError(url, error) {
-          const resultCard = document.createElement("div");
-          resultCard.className = "result-card";
-
-          const urlElement = document.createElement("div");
-          urlElement.className = "result-url";
-          urlElement.textContent = url;
-          resultCard.appendChild(urlElement);
-
-          const errorElement = document.createElement("div");
-          errorElement.className = "result-error";
-          errorElement.textContent =
-            "Error: " + (error.message || "Failed to fetch");
-          resultCard.appendChild(errorElement);
-
-          resultsContainer.appendChild(resultCard);
-        }
-      });
-    </script>
+    <section id="header" class="container b-0">
+      <img class="logo" x-bind:alt="navigation.logo.text" />
+      <ul x-show="mobile">
+        <template x-for="item in navigation.menuItems">
+          <li>
+            <a x-bind:href="item.url" x-text="item.text"></a>
+          </li>
+        </template>
+      </ul>
+      <button x-show="mobile" x-text=""></button>
+    </section>
   </body>
+
+  <script>
+    const websiteData = {
+      mobile: true,
+      navigation: {
+        logo: {
+          text: "אינטראקטיב ישראל",
+          imageUrl: "", // URL placeholder for logo
+        },
+        menuItems: [
+          {
+            text: "קצת עלינו",
+            url: "#",
+            icon: "", // Icon placeholder
+          },
+          {
+            text: "יתרונות באינטראקטיב ישראל",
+            url: "#",
+            icon: "", // Icon placeholder
+          },
+          {
+            text: "הפילוסופיה שלנו",
+            url: "#",
+            icon: "", // Icon placeholder
+          },
+          {
+            text: "לפרטים נוספים",
+            url: "#",
+            icon: "", // Icon placeholder
+          },
+        ],
+        secondaryButtons: {
+          text: "בית השקעות",
+          url: "#",
+        },
+      },
+      heroSection: {
+        mainHeading: 'ניהול תיק השקעות בחו"ל',
+        subHeading: "על ידי מומחי ההשקעות שלנו",
+        callToAction: 'החל מ-300,000 ש"ח בלבד!',
+      },
+      contactForm: {
+        heading: "השאירו פרטים ונחזור אליכם:",
+        fields: [
+          {
+            label: "שם מלא",
+            type: "text",
+            placeholder: "",
+          },
+          {
+            label: "טלפון",
+            type: "tel",
+            placeholder: "",
+          },
+          {
+            label: 'דוא"ל',
+            type: "email",
+            placeholder: "",
+          },
+        ],
+        submitButton: {
+          text: "לפרטים נוספים",
+          icon: "", // Icon placeholder
+        },
+      },
+      disclaimer: {
+        text: 'אינטראקטיב ישראל שותף הוא הינו בית השקעות בניהול בעל רישיון לניהול השקעות משנת 2009 המוכר לפי אליארד ב"ח מסמכים מנוהלים, אינטראקטיב ישראל שותף הינו בית השקעות הפועל ומבוקר ע"י רשות לניירות ערך. יובהר כי כל אחת מחברות קבוצת אינטראקטיב ישראל אשר מעניקה באמצעות העובדים המועסקים על ידה ובאמצעותם שירותי ייעוץ השקעות מוגדרת כיועץ השקעות ("החברות"). שירותי הייעוץ ניתנים, בין היתר, על ידי ה"ה חן גרינבלט, ענבל כהן אלדר, מקבוצת אינטראקטיב ישראל שוקי הון, הינה בעלת רישיון יועץ השקעות מטעם רשות ניירות ערך וכפופה לכללים ולהנחיות הרשות שנועדו להבטיח פעילות תקינה. אינטראקטיב ישראל שוקי הון נדרשת לפעול לטובת הלקוח ולנהוג בדרך של העדפת עניינו של הלקוח ("הנאמנות"). ייתכנו תמורה או טובת הנאה הניתנות לאינטראקטיב ישראל שוקי הון בנוסף לעמלה או תמורה הנגבית מכם, ואשר עלולות להטות את שיקול הדעת בבחירת ניירות הערך או הנכסים הפיננסיים אותם היא מוכרת או רוכשת עבורכם, היוצרות לה זיקה אליו ("ניגוד העניינים"). בפעילות של אנטיאקטיב ישראל שוקי הון רישיון מס\' 1981 - התשמ"א. אין להפיץ/לשכפל כל חלק ממסמך זה ללא אישור בכתב מראש של אינטראקטיב ישראל ו/או המקומי. לבצע עסקות בניירות כאמור, בכל אחד מסניפי החברה והסניפים קבלת דיווחים כנדרש בתקנות במקום לידיכם הבהרות נוסף',
+      },
+      footer: {
+        heading: "קצת עלינו",
+        content: "",
+        imageUrl: "",
+      },
+    };
+  </script>
 </html>
